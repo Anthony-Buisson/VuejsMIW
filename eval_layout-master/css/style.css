@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.inner{
+    width: 100%;
+}
+.txtcenter{
+    text-align: center;
+}
+.desktop, .desktopG, .tablette{
+    display: none;
+}
+.telephone{
+    display: block;
+}
+img{
+    width: 100%;
+    height: auto;
+}
+.img{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+figcaption{
+    margin-top: -4px; /*pas le choix désolé*/
+    text-align: center;
+    background-color: rgba(255,255,255,0.5);
+}
+/*Breakpoint tablette*/
+@media (min-width:768px) {
+    .inner{
+        width: 100%;
+        margin: 0;
+    }
+    .tablette{
+        display: block;
+    }
+    .telephone{
+        display: none;
+    }
+    .img{
+        display: inline-block;
+        width: 48%;
+        margin: 1%;
+    }
+}
+/*Breakpoint desktop*/
+@media (min-width:970px) {
+    .inner{
+        width: 970px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    .desktop{
+        display: block;
+    }
+    .tablette{
+        display: none;
+    }
+}
+/*Breakpoint desktopG*/
+@media (min-width:1370px) {
+    .inner{
+        width: 1370px;
+    }
+    .desktopG{
+        display: block;
+    }
+    .desktop{
+        display: none;
+    }
+    .img{
+        width: 23%;
+    }
+    body{/*petit screamer*/
+        background-image: url('../img/chat.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
