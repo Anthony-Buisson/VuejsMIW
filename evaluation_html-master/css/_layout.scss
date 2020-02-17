@@ -1,0 +1,138 @@
+/***Définition des breakpoints et du inner***/
+// Small devices
+@mixin sm {
+  @media (min-width: #{$mobile-breakpoint}) {
+    @content;
+  }
+}
+// Medium devices
+@mixin md {
+  @media (min-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
+.inner{
+  background-color: $color-light;
+  width: 100%;
+  padding: 0 5px;
+  @include md{
+    margin: 0 auto;
+    width: 80%;
+  }
+}
+
+/***Css de base***/
+
+header{
+  font-family: 'BerninaSansBold', Arial, serif;
+  background-image: url("../img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  height: 600px;
+  position: relative;
+  .headerPromo{
+    background-color: $bg-promo;
+    width: 220px;
+    text-align: center;
+    color: $color-white;
+    padding: 5px;
+    border-radius: 0.5rem;
+    transform: rotate(30deg);
+    transform-origin: bottom left;
+    position: absolute;
+    right: 2rem;
+    .headerPromoMessage{
+      font-weight: bold;
+    }
+    .headerPromoMessageConditions{
+      font-weight: lighter;
+      font-size: 0.7em;
+    }
+  }
+  .headerExplication{
+    background-color: $bg-white;
+    width: 100%;
+    color: $color-white;
+    padding: 5px;
+    position: absolute;
+    bottom: 1rem;
+    .headerExplicationMessage{
+      font-weight: bold;
+      display: block;
+    }
+    .headerExplicationCaract{
+      display: inline;
+      font-size: 0.7em;
+    }
+    @include md{
+      .headerExplicationMessage{
+        display: inline;
+      }
+    }
+  }
+
+}
+
+.gocryoRdv{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  button{
+    font-family: 'BerninaSansBold', Arial, serif;
+    height: fit-content;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    border: 1px solid black;
+    &:hover{
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+  }
+}
+.gocryoTitle{
+  text-align: center;
+  font-family: 'BerninaSansBold', Arial, serif;
+  margin: 2rem auto;
+}
+.gocryoPres{
+  text-align: center;
+}
+.imgPresentationIceXp {
+  text-transform: uppercase;
+  font-weight: normal;
+  font-family: Gotham, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  @include md{
+    text-align: right;
+  }
+}
+.imgPresentation{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  @include sm{
+    flex-direction: row;
+    justify-content: space-around;
+    .imgSoins{
+      order: 2;
+    }
+    .imgSport{
+      order: 1;
+    }
+  }
+  .imgSoins {
+    margin-bottom: 1rem;
+    img {
+      border-radius: 50%;
+      width: 200px;
+    }
+    span {
+      text-align: center;
+      display: block;
+      text-transform: uppercase;
+      font-family: 'GothamHTF-Book', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+  }
+}
