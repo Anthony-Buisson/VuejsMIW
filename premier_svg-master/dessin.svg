@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="moveto-lineto.css"?>
+
+<!--
+https://la-cascade.io/svg-la-syntaxe-path/
+-->
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<svg xml:lang="fr"
+	viewBox="120 120 500 500"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	>
+
+	<style type="text/css">
+		path.fig1{
+			stroke:darkviolet;
+			fill:green;
+		}
+		path.fig2{
+			stroke:red;
+			fill:blue;
+			stroke-width:18;
+			stroke-linejoin:round;
+			<!--stroke-linejoin:bevel;-->
+		}
+	</style>
+
+	<title>Les commandes Moveto et Lineto des paths SVG</title>
+
+	<path class="fig1" d="M 120,200 L 140,120 L 180,280 L 220,120 L 260,280 L 300,120"/>
+
+	<path class="fig2" d="M 300,300 L 300,600 L 600,600  L 600,300 z"/>
+
+	<!--
+		<script> alert('Boom !'); </script>
+	-->
+</svg>
+
+

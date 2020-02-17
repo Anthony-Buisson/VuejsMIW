@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>viewBox</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+
+	<body>
+		<h1>viewBox</h1>
+		<style type="text/css" media="screen">
+			svg {
+				background-color: aliceblue;
+			}
+		</style>
+
+			<div class="ex1">
+				<svg xml:lang="fr"
+					viewBox="0 0 200 100"
+					xmlns="http://www.w3.org/2000/svg"
+					xmlns:xlink="http://www.w3.org/1999/xlink"
+					id="example_1"
+					>
+					    <circle r="50">
+				</svg>
+					<!--
+						width="500px"
+						viewBox="0 0 100 50"
+					-->
+				<div>
+					<p>
+						la viewBox ne détermine pas la taille de l'élément SVG rendu sur la page.
+					</p>
+					<p>
+						Pour cela, il y a les attributs width et height et/ou n'importe quel CSS appliqué à SVG.
+					</p>
+					<p>
+						Par contre, la viewBox détermine le ratio d'aspect de l'espace et
+						la taille relative des éléments qui l'occupent.
+					</p>
+				</div>
+			</div>
+
+			<hr>
+
+			<div class="ex2">
+				<svg xml:lang="fr"
+					viewBox="0 0 100 50"
+					xmlns="http://www.w3.org/2000/svg"
+					xmlns:xlink="http://www.w3.org/1999/xlink"
+					id="example_2"
+					>
+						<circle cx="150" cy="120" r="20" fill="red" />
+				</svg>
+					<!--
+						viewBox="0 0 200 120"
+					-->
+					<!--
+						<style type="text/css" media="screen">
+							svg#example_2 {
+								overflow: visible
+							}
+						</style>
+					-->
+			</div>
+
+			<br> <br> <br> <br> <br> <br> <br>
+
+
+	</body>
+</html>
+

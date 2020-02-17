@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>svg -> USE</title>
+	</head>
+
+	<body>
+		<h1>SVG : USE</h1>
+
+		<div class="example_1">
+			<svg xml:lang="fr"
+				viewBox="0 0 200 200"
+				xmlns="http://www.w3.org/2000/svg"
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+				id="toto"
+				width="200px"
+				fill="green"
+				>
+
+				<path class="fig2" d="M 50,50 L 50,100 L 100,100  L 100,50 z"/>
+
+			</svg>
+
+				<br>
+
+			<svg
+				fill="#FF0000"
+				>
+				<use xlink:href="#toto" />
+			</svg>
+
+			<svg
+				stroke="#FF0000"
+				stroke-width="5px"
+				>
+				<use xlink:href="#toto" />
+			</svg>
+		</div>
+
+	</body>
+</html>
