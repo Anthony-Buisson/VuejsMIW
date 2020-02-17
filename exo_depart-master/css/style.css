@@ -1,0 +1,113 @@
+.bg-blue{
+    background-color: #061339;
+}
+.bg-light{
+    background-color: #DDD;
+}
+.bg-green{
+    background-color: #5CB85C;
+}
+.text-white{
+    color: white;
+}
+.float-right{
+    float: right;
+}
+.mr-0 {
+    margin-right: 0;
+}
+.ml-auto{
+    margin-left: auto;
+}
+.ml-5{
+    margin-left: 2rem;
+}
+.p-2{
+    padding: 0.5rem;
+}
+.p-5{
+    padding: 2rem;
+}
+.pr-5{
+    padding-right: 2rem;
+}
+.pl-5{
+    padding-left: 2rem;
+}
+.text-right{
+    text-align: right;
+}
+.w-25{
+    width:25%;
+}
+.w-75{
+    width: 75%;
+}
+.text-center{
+    text-align: center;
+}
+/**/
+.m-gauche{
+    margin-left: 12.5%;
+}
+.p-gauche{
+    padding-left: 12.5%;
+}
+h2{
+    color: #384374;
+}
+.titleHeader{
+    background-image: url('../img/background.jpg');
+}
+h2{
+    margin-bottom: 0;
+}
+#teteChat{
+    height: 100px;
+    width: auto;
+    background-color: grey;
+}
+
+.d-inline-block{
+    display: inline-block;
+    vertical-align: top;/*Aligne sur le haut du container*/
+}
+body{
+    background-color: #F1F1F1;
+}
+label, input{
+    display: block;
+}
+label{
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+textarea, input, select{
+    width: 100%;
+}
+form textarea{
+    height: 200px;
+}
+select{
+    background-color: white;
+}
+form, textarea, select{
+    border: 1px solid #CCCCCC;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin: 0.25rem;
+    background-color: #F5F5F5;
+}
+section:first-of-type{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.btn{
+    border: none;
+    border-radius: 0.25rem;
+}
+footer{
+    width: 100%;
+    height: fit-content;
+}
