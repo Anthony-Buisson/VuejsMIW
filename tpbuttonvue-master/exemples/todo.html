@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html class="accueil" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>todo.html</title>
+    <link rel="stylesheet" href="style.css">
+    <style type="text/css" media="screen">
+        [v-cloak] {
+            color: white;
+            border: 1px solid red;
+        }
+        ul, li{
+            list-style: none;
+            padding-left: 0;
+        }
+        li{
+            height: 25px;
+            display: flex;
+            padding-bottom: 5px;
+        }
+        li button{
+            height: 25px;
+            border: 0;
+            background-color: transparent;
+        }
+        li img{
+            height: 23px;
+        }
+    </style>
+</head>
+<body>
+<h1>Todo liste</h1>
+<div id="app">
+    <todolist></todolist>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let btn = Vue.component('todolist',{
+        data: function () {
+            return{
+                todoMessage: [""],
+            }},
+        methods: {
+            ajouter(){
+                this.todoMessage.push("");
+                this.$nextTick(function () {
+                    let lastInputRef = 'input_'+ (this.todoMessage.length-1);
+                    this.$refs[lastInputRef][0].focus();
+                })
+            },
+            supprimer(index){
+                if(this.todoMessage.length === 1){
+                    this.todoMessage = [""];
+                    return;
+                }
+                this.todoMessage.splice(index,1);
+            },
+            nbremplisB() {
+                let nb = 0;
+                this.todoMessage.forEach(function (el) {
+                    if (el.length > 0) nb++;
+                });
+                return nb;
+            }
+        },
+        computed: {
+            nbremplisA() {
+                return this.todoMessage.filter((el)=>el.length>0).length;
+            }
+        },
+        filters: {
+            nbremplisC(value){
+                if(!Array.isArray(value)) return null;
+                let nb = 0;
+                value.forEach(function (el) {
+                    if (el.length > 0) nb++;
+                });
+                return nb;
+            }
+        },
+        template: `
+        <div class="bloc">
+            <h2>Todo</h2>
+            <ul>
+                <li v-for="(value, index) in todoMessage" :key="index">
+                    <input @keyup.enter="ajouter" type="text" v-model="todoMessage[index]" :ref="'input_'+index">
+                    <button @click="supprimer(index)"><img src="https://www.materialui.co/materialIcons/action/delete_black_192x192.png" alt="Supprimer"></button>
+                </li>
+            </ul>
+            <button @click="ajouter">Add todo</button>
+            <br><span>MaxA : {{ nbremplisA }}</span>
+            <br><span>MaxB : {{ nbremplisB() }}</span>
+            <br><span>MaxC : {{ todoMessage | nbremplisC }}</span>
+            <br><span>Debug : {{ todoMessage }}</span>
+        </div>`
+    });
+
+
+    var app = new Vue({
+        el: '#app',
+        components:{btn}
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html class="accueil" lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>liaisons.html</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Les liaisons des champs de formulaire</h1>
+<div id="app">
+	<div class="bloc">
+		<p class="explication">
+			Select choix multiple
+		</p>
+		<select v-model="selectedMulti" multiple>
+			<option disabled value="">Choisissez</option>
+			<option v-for="(option, index) in options" :key="index" :value="option.value">{{ option.text }}</option>
+		</select>
+		<span>Sélectionné : {{ selectedMulti }}</span>
+	</div>
+
+	<div class="bloc">
+		<p class="explication">
+			exercice : réaliser un select multiple en affichant les options avec une boucle for
+		</p>
+		<pre class="">
+					new Vue({
+					  el: '...',
+					  data: {
+						selected: 'A',
+					  }
+					})
+				</pre>
+	</div>
+	<div>
+		<div>Cela va faire boom !</div>
+		<div><label for="maxV">Max : </label><input id="maxV" type="number" v-model="max"></div>
+		<button class="boomboombutton" @click="compte" type="button">Appuyez ici</button>
+		<div>on va compter : {{counter}}</div>
+		<div v-if="counter > max-1" class="boomboomsuccess">Boom, vous avez atteint le maximum !</div>
+	</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			message: '',
+			messageMulti: '',
+			checked: true,
+			checkedPrenom: [],
+			picked:'',
+			selected: 'B',
+			selectedMulti: [],
+			counter: 0,
+			max: 10,
+			options: [
+				{ text: 'Un', value: 'A' },
+				{ text: 'Deux', value: 'B' },
+				{ text: 'Trois', value: 'C' }
+			]
+		},
+		methods: {
+			compte(){
+				if(this.counter < this.max) this.counter++;
+			}
+		}
+	});
+</script>
+<style>
+	.boomboombutton{
+		padding: 1rem;
+		background-color: darkgreen;
+		color: white;
+	}
+	.boomboomsuccess{
+		padding: 2rem;
+		width: fit-content;
+		background-color: red;
+		color: white;
+		animation: rotate 2s linear infinite ;
+	}
+	@keyframes rotate {
+		50%{
+			transform: rotate(360deg) scale(0);
+		}
+		100%{
+			transform: rotate(-360deg) scale(2);
+		}
+	}
+</style>
+</body>
+</html>

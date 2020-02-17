@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html class="accueil" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>todo.html</title>
+    <link rel="stylesheet" href="style.css">
+    <style type="text/css" media="screen">
+        [v-cloak] {
+            color: white;
+            border: 1px solid red;
+        }
+        ul, li{
+            list-style: none;
+            padding-left: 0;
+        }
+        li{
+            height: 25px;
+            display: flex;
+            padding-bottom: 5px;
+        }
+        li button{
+            height: 25px;
+            border: 0;
+            background-color: transparent;
+        }
+        li img{
+            height: 23px;
+        }
+    </style>
+</head>
+<body>
+<h1>Todo liste</h1>
+<div id="app">
+    <todolist></todolist>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let btn = Vue.component('todolist',{
+        data: function () {
+            return{
+                todoMessage: [{id: 1, titre: ""}],
+                apiUri: "http://localhost:3000/"
+            }},
+        methods: {
+            ajouter(){
+                fetch(this.apiUri + 'todo', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: ""})
+                    .then((resp) => { resp.json()
+                        .then((resp) => {
+                            this.todoMessage.push(resp);
+                            this.$nextTick(function () {
+                                let lastInputRef = 'input_'+ (resp.id);
+                                this.$refs[lastInputRef][0].focus();
+                            });
+                        });
+                    });
+            },
+            supprimer(val){
+                if(this.todoMessage.length === 1){
+                    return;
+                }
+                fetch(this.apiUri + 'todo/'+val.id, {method: "DELETE"})
+                    .then((resp) => {resp.json()
+                        .then(() => {
+                            this.todoMessage.splice(this.todoMessage.indexOf(val),1);
+
+                        })
+                    });
+            },
+            update(value){
+                fetch(this.apiUri + 'todo/' + value.id, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(value)
+                });
+            },
+        },
+        computed: {
+            nbremplisA() {
+                return 'Marche pas';
+            }
+        },
+        mounted(){
+            let lsValue = localStorage.getItem('todolist');
+            if(JSON.parse(lsValue)) this.todoMessage = JSON.parse(lsValue);
+            fetch(this.apiUri + 'todo', {method: "GET"})
+                .then((resp) => {resp.json()
+                    .then(data => {
+                        if(data.length>0) this.todoMessage = data;
+                    })
+                });
+        },
+        template: `
+        <div class="bloc">
+            <h2>Todo</h2>
+            <ul>
+                <li v-for="(value) in todoMessage" :key="value.id">
+                    <input @blur=update(value) @keyup.enter="ajouter" type="text" v-model="value.titre" :ref="'input_'+value.id">
+                    <button @click="supprimer(value)"><img src="trash.svg" alt="Supprimer"></button>
+                </li>
+            </ul>
+            <button @click="ajouter">Add todo</button>
+            <br><span>Max : {{ nbremplisA }}</span>
+            <br><span>Debug : {{ todoMessage }}</span>
+        </div>`
+    });
+
+    var app = new Vue({
+        el: '#app',
+        components:{btn}
+    });
+
+</script>
+</body>
+</html>
