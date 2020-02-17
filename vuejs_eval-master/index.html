@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="accueil" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>factures.html</title>
+</head>
+<body>
+<div id="app">
+    <facture></facture>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let btn = Vue.component('facture',{
+        data() {
+            return{
+                versionLocale: ' (Attention, version locale)',
+                apiUri: "http://localhost:3000/",
+                titre: 'Evaluation Vuejs',
+                texteBouton: '+ Ajouter une ligne',
+                headers: ['Id', 'Désignation', 'Qte', 'Pu ht', 'Tva', 'P Ht', 'P Ttc'],
+                produits: [
+                    {id: 1, designation: "un avion", qte: 1, pu_ht: 210, tva: 20, p_ht: 210, p_ttc: 252},
+                    {id: 2, designation: "un bateau", qte: 1, pu_ht: 20, tva: 0, p_ht: 20, p_ttc: 20},
+                ],
+                tauxTva: [20,0]
+            }},
+        methods: {
+            ajouter(){
+                let nouveauProduit = {designation: "", qte: 1, pu_ht: 1, tva: 20};
+                nouveauProduit.p_ht = nouveauProduit.qte*nouveauProduit.pu_ht;
+                nouveauProduit.p_ttc = nouveauProduit.p_ht*nouveauProduit.tva;
+
+                fetch(this.apiUri + 'factures', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nouveauProduit)})
+                    .then((resp) =>  resp.json())
+                    .then((resp) => {
+                        nouveauProduit.id = resp.id;
+                        this.produits.push(nouveauProduit);
+                        this.$nextTick(function () {
+                            let lastInputRef = 'input_'+ (resp.id);
+                            this.$refs[lastInputRef][0].focus();
+                        });
+                    });
+            },
+            supprimer(val){
+                if(this.produits.length === 1) return;
+
+                fetch(this.apiUri + 'factures/'+val.id, {method: "DELETE"})
+                    .then((resp) => {
+                        if(resp.status === 200) this.produits.splice(this.produits.indexOf(val),1);
+                    });
+            },
+            update(value){
+                localStorage.setItem('produits', JSON.stringify(this.produits));
+
+                fetch(this.apiUri + 'factures/' + value.id, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(value)
+                });
+            },
+        },
+        watch: {
+            produits: {
+                deep: true,
+                handler(){
+                    this.produits.forEach((produit)=>{
+                        produit.p_ht = produit.qte*produit.pu_ht;
+                        produit.p_ttc = ((1+(produit.tva/100))*produit.p_ht).toFixed(2)*1;
+                    })
+                }
+            }
+        },
+        computed: {
+            date(){
+                let date = new Date(Date.now());
+                let options = {year: "numeric", month: "long", day: "numeric"};
+                return 'Facture du '+date.toLocaleDateString("fr-FR", options);
+            },
+            totalHt(){
+                let total = 0;
+                this.produits.forEach((produit)=>{ total+= produit.p_ht; });
+                return 'Total HT : '+total;
+            },
+            totalTtc(){
+                let total = 0;
+                this.produits.forEach((produit)=>{ total+= produit.p_ttc; });
+                return 'Total TTC : '+total.toFixed(2);
+            }
+        },
+        mounted(){
+            //localstorage
+            let lsValue = localStorage.getItem('produits');
+            if(JSON.parse(lsValue)) this.produits = JSON.parse(lsValue);
+
+            //AJAX
+            setTimeout(
+                ()=>{fetch(this.apiUri + 'factures', {method: "GET"})
+                    .then((resp) => resp.json())
+                    .then(data => {
+                        if(data.length>0) this.produits = data;
+                        this.versionLocale = '';
+                    });
+                }, 3000);
+        },
+        template: `
+        <div>
+            <h2>{{ titre }}</h2>
+            <h3>{{ date }}{{ versionLocale }}</h3>
+            <table>
+                <thead>
+                    <th v-for="(value, index) in headers" :key="index">{{value}}</th>
+                </thead>
+                <tbody>
+                    <tr v-for="(value) in produits" :key="value.id">
+                        <td>{{value.id}}</td>
+                        <td><input @change="update(value)" @keyup.enter="ajouter" type="text" v-model="value.designation" :ref="'input_'+value.id"></td>
+                        <td><input @change="update(value)" type="number" step="1" v-model="value.qte"></td>
+                        <td><input @change="update(value)" type="number" v-model="value.pu_ht"></td>
+                        <td>
+                            <select @change="update(value)" type="number" step="0.5" v-model="value.tva">
+                                <option v-for="(taux, index) in tauxTva" :key="index" :value="taux">{{ taux }}%</option>
+                            </select>
+                        </td>
+                        <td>{{value.p_ht}}</td>
+                        <td>{{value.p_ttc}}</td>
+                        <td><button @click="supprimer(value)"><img src="trash.svg" alt="Supprimer"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="total">
+                <tr>
+                    <td><button class="btn" @click="ajouter">{{ texteBouton }}</button></td>
+                    <td class="totalEur">{{ totalHt }}</td>
+                    <td class="totalEur">{{ totalTtc }}</td>
+                </tr>
+            </table>
+        </div>`
+    });
+
+    var app = new Vue({
+        el: '#app',
+        components:{btn}
+    });
+
+</script>
+</body>
+<style>
+    .btn{
+        border-radius: 0.25rem;
+        background-color: transparent;
+        border: 1px solid green;
+        color: green;
+        padding: 0.5rem;
+    }
+    input{
+        border-radius: 0.25rem;
+        padding: 2px;
+
+    }
+    tr, thead{
+        border-top: 1px solid black;
+    }
+    table{
+        table-layout: auto;
+        width: 10px;
+        text-align: center;
+    }
+    .total{
+        table-layout: fixed;
+        width: 800px;
+    }
+    .totalEur{
+        background-color: darkgrey;
+        border-radius: 0.25rem;
+    }
+</style>
+</html>
