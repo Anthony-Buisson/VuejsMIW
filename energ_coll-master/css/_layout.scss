@@ -1,0 +1,127 @@
+// Small devices
+@mixin sm {
+  @media (min-width: #{$mobile-breakpoint}) {
+    @content;
+  }
+}
+// Medium devices
+@mixin md {
+  @media (min-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+// Large devices
+@mixin lg {
+  @media (min-width: #{$laptop-breakpoint}) {
+    @content;
+  }
+}
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$desktop-breakpoint}) {
+    @content;
+  }
+}
+// Custom devices
+@mixin rwd($screen) {
+  @media (min-width: $screen+'px' ) {
+    @content;
+  }
+}
+
+.inner{
+  background-color: $color-light;
+  width: 100%;
+  @include md{
+    margin: 0 auto;
+    width: $tablet-breakpoint;
+  }
+  @include lg{
+    width: $laptop-breakpoint;
+  }
+  @include xl{
+    width: $desktop-breakpoint;
+  }
+}
+.hidden{
+  display: none;
+  visibility: hidden;
+}
+img{
+  width: 100%;
+}
+.header-controls{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../svg/points.svg");
+  background-repeat: repeat;
+  .header-controls_next{
+    width: 10px;
+  }
+}
+.presentation {
+  justify-content: center;
+  .presentation-logo {
+    width: 30%;
+    margin: 0 auto;
+  }
+  .presentation-titre, .presentation-soustitre {
+    text-align: center;
+    color: orange;
+  }
+}
+.menu_logo{
+  display: inline-flex;
+  width: calc(100% - 50px);
+  height: auto;
+}
+.picto_pres{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  div{
+    width: 50%;
+    padding: 1rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &:nth-child(1) {
+      color: #C3A575;
+    }
+    &:nth-child(2) {
+      color: #B3D143;
+    }
+
+    &:nth-child(3) {
+      color: #FCB731;
+    }
+
+    &:nth-child(4) {
+      color: #00AFEC;
+    }
+    @include md{
+      width: auto;
+    }
+  }
+  img{
+    height: 100px;
+  }
+  span{
+    display: block;
+    text-align: center;
+  }
+}
+.article{
+  .article-left{
+    text-transform: uppercase;
+  }
+  h2{
+    color: rgb(109,111,113);
+  }
+  .actualites{
+    h2{
+      color: white;
+    }
+  }
+}
