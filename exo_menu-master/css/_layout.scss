@@ -1,0 +1,31 @@
+.page_accueil{
+  background-image: url("../img/accueil.jpg");
+}
+.page_cerise{
+  background-image: url("../img/cerise.jpg");
+}
+.page_poire{
+  background-image: url("../img/poire.jpg");
+}
+.page_pomme{
+  background-image: url("../img/pomme.jpg");
+}
+.page_tomate{
+  background-image: url("../img/tomate.jpg");
+}
+.image_fond{
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.h2{
+  min-height: 90vh;//viewheight
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h2{
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0,0,0,0.5);
+}
