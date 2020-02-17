@@ -1,0 +1,120 @@
+$breakpoint-mobile: 764px;
+$menu-background: green;
+$bg-dark-color: #d6d6d6;
+$bg-dark-color-darken: darken($bg-dark-color, 20);
+$link-color: white;
+$blackColor: #020304;
+
+.bg-dark{
+  background-color: $bg-dark-color;
+}
+.menu {
+  position: relative;
+  padding: 0;
+  .menu_burger{
+    padding-left: 2rem;
+    display: block;
+    h1{
+      @extend %menu_burger_item;
+      flex-direction: row;
+      margin: 0;
+      padding-left: 1rem;
+      text-align: center;
+    }
+    .menu_burger-icon{
+      @extend %menu_burger_item;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin: 0;
+    }
+  }
+  .menu_burger-icon {
+    margin-right: 0.5em;
+    height: 20px;
+    z-index: 5;
+
+    span {
+      position: relative;
+      top: 50%;
+      width: 30px;
+      height: 2px;
+      display: block;
+      background: $blackColor;
+      transition: .5s;
+    }
+
+    span:first-child {
+      top: 3px;
+    }
+
+    span:last-child {
+      top: 16px;
+    }
+
+    label:hover {
+      cursor: pointer;
+    }
+  }
+  .menu_li{
+    display: none;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+  a{
+    text-decoration: none;
+    color: $link-color;
+  }
+  &:hover {
+    .menu_burger-icon span{
+      &:nth-child(1){
+        transform: translate(-10px, 9px) rotate(-90deg);
+      }
+      &:nth-child(2){
+        transform: rotate(-90deg);
+
+      }
+      &:nth-child(3){
+        transform: translate(10px, -8px) rotate(-90deg);
+      }
+    }
+    .menu_li, .menu_li:hover {
+      display: block;
+      position: relative;
+      background-color: $menu-background;
+    }
+  }
+}
+%menu_burger_item{
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+@media (min-width: $breakpoint-mobile) {
+  .menu{
+    display: flex;
+    .menu_li{
+      display: flex;
+      width: auto;
+      position: relative;
+      vertical-align: middle;
+      padding: 0 0.2rem;
+      align-self: center;
+    }
+    .menu_burger {
+      padding-right: 1rem;
+      .menu_burger-icon{
+        display: none;
+      }
+    }
+    &:hover .menu_li, .menu_li:hover{
+      display: inline-flex;
+      background-color: $bg-dark-color;
+    }
+    .menu_li:hover a{
+      background-color: $bg-dark-color-darken;
+    }
+  }
+
+
+}

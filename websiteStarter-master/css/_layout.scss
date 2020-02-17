@@ -1,0 +1,53 @@
+/*@if not (global_variable_exists($color-light)){
+  @import "colors";
+}
+@if not (global_variable_exists($tablet-breakpoint)){
+  @import "breakpoints";
+}*/
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$mobile-breakpoint}) {
+    @content;
+  }
+}
+// Medium devices
+@mixin md {
+  @media (min-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+// Large devices
+@mixin lg {
+  @media (min-width: #{$laptop-breakpoint}) {
+    @content;
+  }
+}
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$desktop-breakpoint}) {
+    @content;
+  }
+}
+// Custom devices
+@mixin rwd($screen) {
+  @media (min-width: $screen+'px' ) {
+    @content;
+  }
+}
+
+.inner{
+  background-color: $color-light;
+  width: 100%;
+  height: 100vh;
+  @include md{
+    margin: 0 auto;
+    width: $tablet-breakpoint;
+  }
+  @include lg{
+    width: $laptop-breakpoint;
+  }
+  @include xl{
+    width: $desktop-breakpoint;
+  }
+}
